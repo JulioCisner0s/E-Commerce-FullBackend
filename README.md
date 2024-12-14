@@ -15,6 +15,8 @@ Soporte para vistas dinámicas: Uso de Handlebars para renderizar las vistas.
 
 ## Instalación
 
+DOCKER-HUB: https://hub.docker.com/repository/docker/jcisnerosr24/e-commerce-fullbackend/tags/latest/sha256:b327ae2ed76378e89c28350d07692dab4664799bca968ab3bb4a81bf048e61e6
+
 1. Clona este repositorio: `git clone https://github.com/JulioCisner0s/E-Commerce-FullBackend.git`
 
 2. Instala las dependencias: `npm install`
@@ -26,6 +28,8 @@ Soporte para vistas dinámicas: Uso de Handlebars para renderizar las vistas.
 - Admin: Username: juliocesarcisnerosrosales@gmail.com, Password: Julio240300
 
 - Premium:Username: daniel.villajuan@gmail.com, Password: CoderHouse1234
+
+- Premium:Username: julio.rosales@gmail.com, Password: 12345678
 
 - Usuario:Username: julio.cisneros@gmail.com, Password: 12345678
 

@@ -100,7 +100,7 @@ components:
           type: string
           description: The product owner
       example:
-        _id: "66b54a70ef08530b64b4d5ce"
+        _id: "675d04a4e327d5df560d9f15"
         name: "Shoes"
         description: "Comfortable facha shoes"
         price: 100

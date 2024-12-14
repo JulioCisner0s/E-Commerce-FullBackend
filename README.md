@@ -15,7 +15,7 @@ Soporte para vistas dinámicas: Uso de Handlebars para renderizar las vistas.
 
 ## Instalación
 
-1. Clona este repositorio: `git clone https://github.com/NicolasReschke/2da_pre_entrega_BackEnd`
+1. Clona este repositorio: `git clone https://github.com/JulioCisner0s/E-Commerce-FullBackend.git`
 
 2. Instala las dependencias: `npm install`
 

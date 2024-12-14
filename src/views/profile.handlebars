@@ -1,0 +1,120 @@
+<h2>Perfil de Usuario</h2>
+
+<div class="card mb-3">
+    <div class="row g-0" style="align-items: center; margin:10px;">
+        <div class="col-md-4">
+            <img src="{{user.profile_image}}" class="img-fluid rounded-start" style="width: 540px;">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{user.first_name}} {{user.last_name}}</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Email: </strong>{{user.email}}</li>
+                    <li class="list-group-item"><strong>Edad: </strong>{{user.age}}</li>
+                    <li class="list-group-item"><strong>Registrado: </strong>{{user.formattedCreatedAt}}</li>
+                    <li class="list-group-item"><strong>Última modificación de perfil: </strong>{{user.formattedUpdatedAt}}</li>
+                </ul>
+            </div>
+            <div class="card-body">
+                {{#if (equals user.role "user")}}
+                    <a href="/profile/{{user._id}}/documents">
+                        <button class="btn btn-warning">Subir documentos para ser Premium</button>
+                    </a>
+                {{else}}
+                    <a href="/profile/{{user._id}}/documents">
+                        <button class="btn btn-warning">Actualizar mis documentos</button>
+                    </a>
+                {{/if}}
+                <br><br>
+                {{#if (equals user.role "user")}}
+                    <button class="btn btn-warning change-role">Cambiar a Usuario Premium (sin subir documentos)</button>
+                {{else}}
+                    <button class="btn btn-warning change-role">Cambiar a Usuario común</button>
+                {{/if}}
+                <br><br>
+                <a href="/profile/{{user._id}}"><button class="btn btn-success">Editar mi perfil</button></a>
+                <br><br>
+                <a href="/forgot-password"><button class="btn btn-info">Cambiar contraseña</button></a>
+                <br><br>
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <div class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed btn btn-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                Eliminar cuenta
+                            </button>
+                        </div>
+                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body" id="currentUserDetails">
+                                <button id="deleteProfileBtn" class="btn btn-outline-danger" style="margin-top: 10px;">☠ Si, deseo eliminar mi cuenta ☠</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('deleteProfileBtn').addEventListener('click', function() {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Esta acción es irreversible.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`/profile/{{user._id}}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        Swal.fire(
+                            'Eliminado!',
+                            'Tu perfil ha sido eliminado.',
+                            'success'
+                        ).then(() => {
+                            window.location.href = '/login?success=Perfil eliminado correctamente.'
+                        })
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            'Hubo un problema al eliminar tu perfil.',
+                            'error'
+                        )
+                    }
+                })
+            }
+        })
+    })
+
+    document.querySelector('.change-role').addEventListener('click', function() {
+        const userId = "{{user._id}}"
+        fetch(`/api/users/premium/${userId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.role) {
+                Swal.fire('Éxito', `El rol ha sido cambiado a ${data.role}`, 'success').then(() => {
+                    window.location.reload()
+                })
+            } else {
+                Swal.fire('Error', 'No se pudo cambiar el rol', 'error')
+            }
+        })
+        .catch(error => {
+            Swal.fire('Error', 'Hubo un problema al cambiar el rol', 'error')
+        })
+    })
+</script>
